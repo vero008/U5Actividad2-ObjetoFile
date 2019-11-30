@@ -1,0 +1,43 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="io.cordova.camara" version="1.5.0" 
+        xmlns="http://www.w3.org/ns/widgets" 
+        xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<preference name="phonegap-version" value="cli-9.0.0" />
+  <name>Actividad2-File</name>
+  <description>
+      Esta es una App de PhoneGap para archivo
+  </description>
+  <author email="" href="http://cordova.io">
+      Verónica Aguirre Frías
+  </author>
+  <content src="index.html" />
+  <plugin name="cordova-plugin-whitelist" spec="1.3.4" />
+  <plugin name="cordova-plugin-dialogs"/> 
+  <plugin name="cordova-plugin-device"/>
+  <plugin name="cordova-plugin-camera"/>
+    <plugin name="cordova-plugin-media-capture"/>
+    <plugin name="cordova-plugin-media"/>
+    <plugin name="cordova-plugin-magnetometer"/>
+    <plugin name="cordova-plugin-device-orientation"/>
+    
+    <plugin name="cordova-plugin-geolocation"/>
+    <!--<plugin name="org.apache.cordova.geolocation"/>-->
+    <plugin name="cordova.geolocation"/>
+    
+    <plugin name ="cordova-plugin-file"/>
+    
+  <access origin="*" />
+  <allow-intent href="http://*/*" />
+  <allow-intent href="https://*/*" />
+  <allow-intent href="tel:*" />
+  <allow-intent href="sms:*" />
+  <allow-intent href="mailto:*" />
+  <allow-intent href="geo:*" />
+  <platform name="android">
+      <allow-intent href="market:*" />
+  </platform>
+  <platform name="ios">
+      <allow-intent href="itms:*" />
+      <allow-intent href="itms-apps:*" />
+  </platform>
+</widget>
