@@ -20,9 +20,6 @@
     <plugin name="cordova-plugin-magnetometer"/>
     <plugin name="cordova-plugin-device-orientation"/>
     
-    <plugin name="cordova-plugin-geolocation"/>
-    <!--<plugin name="org.apache.cordova.geolocation"/>-->
-    <plugin name="cordova.geolocation"/>
     
     <plugin name ="cordova-plugin-file"/>
     
