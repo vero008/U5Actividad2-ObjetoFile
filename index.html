@@ -13,8 +13,11 @@
            
         
 
-        //codigo
-    //fs.root.getFile("sample.txt", { create : false },  processEntry, onFileError); 
+//codigo
+            fs.root.getFile("sample.txt", { create : false },  processEntry, onFileError); 
+            
+            
+            
     
     function processEntry(theEntry) {  
         var fi = "";  fi += '<p><b>Name</b>: ' + theEntry.name + '</p>';  fi += '<p><b>Full Path</b>: ' + theEntry.fullPath + '</p>';  fi += '<p><b>URI</b>: ' + theEntry.toURI() + '</p>';  
