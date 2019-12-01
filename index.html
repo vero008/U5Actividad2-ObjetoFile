@@ -57,16 +57,29 @@
                                  //Now tell the user what happened  
                                  navigator.notification.alert(msgText, null, "File Error"); 
                                 }
-                                 
+        //READING DIRECTORY ENTRIES
+            function onGetFileSystemSuccess(fs) {  alert("Accessing " + fs.name + " storage (" +    fs.root.fullPath + ")");  
+                                                 //Create a directory reader we'll use to list the files in  
+                                                 //the directory  
+                                                 var dr = fs.root.createReader();  
+                                                 // Get a list of all the entries in the directory  
+                                                 dr.readEntries(onDirReaderSuccess, onFileError); } 
+            function onDirReaderSuccess(dirEntries) {  var i, fl, len;  len = dirEntries.length;  if(len > 0) {    fl = '<ul data-role="listview">';    for( i = 0; i < len; i++) {      if(dirEntries[i].isDirectory == true) {        fl += '<li><a href="#" onclick="processEntry(' + i +          ');">Directory: ' + dirEntries[i].name + '</a></li>';      } else {        fl += '<li><a href="#" onclick="processEntry(' + i +          ');">File: ' + dirEntries[i].name + '</a></li>';      }    }
+              fl += "</ul>";  } else {    fl = "<p>No entries found</p>";  }
+                                                     //Update the page content with our directory list  
+                                                     $('#dirEntries').html(fl);  
+                                                     //Display the directory entries page  
+                                                     $.mobile.changePage("#dirList", "slide", false, true); }                                                                                                   
 
-        //codigo
+    /*       //codigo
     //fs.root.getFile("sample.txt", { create : false },  processEntry, onFileError); 
             fs.getFile("sample.txt", { create : false },  processEntry, onFileError); 
-            
-            
     
-    function processEntry(theEntry) {  
-        var fi = "";  fi += '<p><b>Name</b>: ' + theEntry.name + '</p>';  fi += '<p><b>Full Path</b>: ' + theEntry.fullPath + '</p>';  fi += '<p><b>URI</b>: ' + theEntry.toURI() + '</p>';  
+ function processEntry(theEntry) {  
+        var fi = "";  
+        fi += '<p><b>Name</b>: ' + theEntry.name + '</p>';  
+        fi += '<p><b>Full Path</b>: ' + theEntry.fullPath + '</p>';  
+        fi += '<p><b>URI</b>: ' + theEntry.toURI() + '</p>';  
                                      if(theEntry.isFile == true) 
     {    
         fi += '<p>The entry is a file</p>';  
@@ -81,11 +94,24 @@
                                      
     theEntry.getMetadata(onGetMetadataSuccess, onFileError);
     
-    function onGetMetadataSuccess(metadata) {  alert("File Modification Time:" + metadata.modificationTime); } 
+    function onGetMetadataSuccess(metadata) {  
+        alert("File Modification Time:" + metadata.modificationTime); 
+    } 
     
-    function onGetMetadataSuccess(metadata) {  var md = '';  for(aKey in metadata) {    md += '<b>' + aKey + '</b>: ' + metadata[aKey] + br;  }  md += hr;  //Update the page content with information about the file  
-                                             $('#fileMetadata').html(md); } 
-    
+    function onGetMetadataSuccess(metadata) {  
+        var md = '';  for(aKey in metadata) {    
+            md += '<b>' + aKey + '</b>: ' + metadata[aKey] + br;  
+        }  
+        md += hr;  //Update the page content with information about the file  
+                                             
+        $('#fileMetadata').html(md); 
+    } 
+    */
     </script>
-      <section id="fileDetails" data-role="page"  data-add-back-btn="true">  <header data-role="header">    <h1>File API Demo</h1>  </header>  <div data-role="content">    <p><em>Directory Entry Information</em></p>    <hr />    <div id="fileInfo"></div>    <hr />    <p><em>File Metadata:</em></p>    <div id="fileMetadata"></div>    <input type="button" value="View File"      onclick="viewFile();">    <input type="button" value="Remove File"      onclick="removeFile();">  </div> </section>
+      <!--<section id="fileDetails" data-role="page"  data-add-back-btn="true">  <header data-role="header">    <h1>File API Demo</h1>  </header>  <div data-role="content">    <p><em>Directory Entry Information</em></p>    <hr />    <div id="fileInfo"></div>    <hr />    <p><em>File Metadata:</em></p>    <div id="fileMetadata"></div>    <input type="button" value="View File"      onclick="viewFile();">    <input type="button" value="Remove File"      onclick="removeFile();">  </div> </section>
+-->
+        <!--READING DIRECTORY-->
+        <section id="dirList" data-role="page" data-add-back-btn="true">  <header data-role="header">    <h1>File API Demo</h1>    <a onclick="writeFile();" data-icon="plus"      class="ui-btn-right">Write</a>  </header>  <div data-role="content">    <p>File system contents:</p>    <div id="dirEntries"></div>    <hr />    <div id="writeInfo"></div>  </div> </section>
 </html>
+               
+                                    
