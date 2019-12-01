@@ -2,19 +2,30 @@
 <html>  
     <head>    
         <title>Example 13-1</title>    
-        <meta http-equiv="Content-type" content="text/html;      charset=utf-8">    
-        <meta name="viewport" id="viewport"      content="width=device-width, height=device-height,      
-                                                          initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" >    
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" id="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript" charset="utf-8">
+           
         
-            
-        <script type="text/javascript" charset="utf-8"
-src="phonegap.js"></script>
-<script type="text/javascript" charset="utf-8">
 
         //codigo
-    fs.root.getFile("sample.txt", { create : false },  processEntry, onFileError); 
+    //fs.root.getFile("sample.txt", { create : false },  processEntry, onFileError); 
     
-    function processEntry(theEntry) {  var fi = "";  fi += '<p><b>Name</b>: ' + theEntry.name + '</p>';  fi += '<p><b>Full Path</b>: ' + theEntry.fullPath + '</p>';  fi += '<p><b>URI</b>: ' + theEntry.toURI() + '</p>';  if(theEntry.isFile == true) {    fi += '<p>The entry is a file</p>';  } else {    fi += '<p>The entry is a directory</p>';  }  //Update the page content with information about the file  
+    function processEntry(theEntry) {  
+        var fi = "";  fi += '<p><b>Name</b>: ' + theEntry.name + '</p>';  fi += '<p><b>Full Path</b>: ' + theEntry.fullPath + '</p>';  fi += '<p><b>URI</b>: ' + theEntry.toURI() + '</p>';  
+                                     if(theEntry.isFile == true) 
+    {    
+        fi += '<p>The entry is a file</p>';  
+    } 
+                                     else {    
+                                         fi += '<p>The entry is a directory</p>';  
+                                     } 
+                                     //Update the page content with information about the file  
                                      $('#fileInfo').html(fi);  
                                      //Display the directory entries page  
                                      $.mobile.changePage("#fileDetails", "slide", false, true); } 
