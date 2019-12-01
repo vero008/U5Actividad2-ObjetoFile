@@ -58,7 +58,9 @@
                                  navigator.notification.alert(msgText, null, "File Error"); 
                                 }
         //READING DIRECTORY ENTRIES
-            function onGetFileSystemSuccess(fs) {  alert("Accessing " + fs.name + " storage (" +    fs.root.fullPath + ")");  
+            function onGetFileSystemSuccess(fs) {  
+                //alert("Accessing " + fs.name + " storage (" +    fs.root.fullPath + ")");  
+                 navigator.notification.alert("Accessing " + fs.name + " storage (" +    fs.root.fullPath + ")");  
                                                  //Create a directory reader we'll use to list the files in  
                                                  //the directory  
                                                  var dr = fs.root.createReader();  
