@@ -1,92 +1,267 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Example 10.2</title>
-    <meta charset="utf-8" />
-    <meta name="format-detection" content="telephone=no" />
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height" />
-    <!-- <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" /> -->
-    <!-- Load the jQuery Mobile CSS file -->
-    <link rel="stylesheet" href="jquery.mobile-1.3.2.min.css" />
-    <!-- Then the jQuery support files -->
-    <script type="text/javascript" charset="utf-8" src="jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="jquery.mobile-1.3.2.min.js"></script>
-    <!-- Load the cordova JavaScript file -->
-    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-    <!-- Load the application's main JavaScript file -->
-    <script type="text/javascript" charset="utf-8" src="index.js"></script>
-    <!-- This is a little utility file that contains code to create a random file name -->
-    <script type="text/javascript" charset="utf-8" src="randomStr.js"></script>
-    <!-- Free wrapper for fileWriter that allows multiple writes -->
-    <!-- http://gofgsportscompu.svn.sourceforge.net/viewvc/gofgsportscompu/trunk/www/js/continuousfilewriter.js?view=markup -->
-    <script type="text/javascript" charset="utf-8" src="continuousfilewriter.js"></script>
-  </head>
-  <body onload="onBodyLoad()">
-    <section id="main" data-role="page" >
-      <header data-role="header">
-        <h1>Example 10.2</h1>
-      </header>
-      <div data-role="content">
-        <p>This is an application that demonstrates the operation of the Cordova File API. Select one of the buttons below to process the selected file system.</p>
-        <input type="button" value="Temporary Storage" onclick="processDir(LocalFileSystem.TEMPORARY);">
-        <input type="button" value="Persistent Storage" onclick="processDir(LocalFileSystem.PERSISTENT);">
-      </div>
-      <div data-role="footer" data-id="foot_main" data-position="fixed">
-        <h4>www.cordovacookbook.com</h4>
-      </div>
-    </section>
-    <section id="dirList" data-role="page" data-add-back-btn="true">
-      <header data-role="header">
-        <h1>File API Demo</h1>
-        <a onclick="writeFile();" data-icon="plus" class="ui-btn-right">Write</a>
-      </header>
-      <div data-role="content">
-        <p> File System Contents</p>
-        <ul data-role="listview" id="dirEntryList"></ul>
-      </div>
-      <div data-role="footer" data-id="foot_main" data-position="fixed">
-        <h4>www.cordovacookbook.com</h4>
-      </div>
-    </section>
-    <section id="fileDetails" data-role="page" data-add-back-btn="true">
-      <header data-role="header">
-        <h1>File API Demo</h1>
-      </header>
-      <div data-role="content">
-        <p><em>Directory Entry Information</em></p>
-        <hr />
-        <div id="fileInfo"></div>
-        <hr />
-        <p><em>File Metadata:</em></p>
-        <div id="fileMetadata"></div>
-        <div id="viewFileButton">
-          <input type="button" value="View File" onclick="viewFile();">
-        </div>
-        <input type="button" value="Remove File" onclick="removeFile();">
-      </div>
-      <div data-role="footer" data-id="foot_main" data-position="fixed">
-        <h4>www.cordovacookbook.com</h4>
-      </div>
-    </section>
-    <section id="viewFile" data-role="page" data-add-back-btn="true">
-      <header data-role="header">
-        <h1>File API Demo</h1>
-      </header>
-      <div data-role="content">
-        <div id="viewFileName"></div>
-        <div id="fileContents"></div>
-        <hr />
-        <strong>File Reader Activity</strong>
-        <br />
-        <div id="readInfo"></div>
-      </div>
-      <div data-role="footer" data-id="foot_main" data-position="fixed">
-        <h4>www.cordovacookbook.com</h4>
-      </div>
-    </section>
-  </body>
-</html>
+<!DOCTYPE html> 
+<html>  
+    <head>    
+        <title>Example 13-1</title>    
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <meta name="viewport" id="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=no;" />
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+        <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
+        <script type="text/javascript" charset="utf-8">
         
+            
+function onSuccessFunction(fs) {  
+    alert("Accessing " + fs.name + " storage (" +    fs.root.fullPath + ")");  
+    //Do something with the file system (fs) here
+}             
+
+function onFileError(e) {  
+    var msgText;  
+    switch(e.code) {    
+        case FileError.NOT_FOUND_ERR:      
+            msgText = "File not found error.";      
+            break;    
+        case FileError.SECURITY_ERR:      
+            msgText = "Security error.";      
+            break;    
+        case FileError.ABORT_ERR:      
+            msgText = "Abort error.";      
+            break;    
+        case FileError.NOT_READABLE_ERR:      
+            msgText = "Not readable error.";      
+            break;    
+        case FileError.ENCODING_ERR:      
+            msgText = "Encoding error.";      
+            break;    
+        case FileError.NO_MODIFICATION_ALLOWED_ERR:      msgText = "No modification allowed.";      
+            break;    
+        case FileError.INVALID_STATE_ERR:      
+            msgText = "Invalid state.";      
+            break;    
+        case FileError.SYNTAX_ERR:      
+            msgText = "Syntax error.";      
+            break;    
+        case FileError.INVALID_MODIFICATION_ERR:      
+            msgText = "Invalid modification.";      break;    
+        case FileError.QUOTA_EXCEEDED_ERR:      
+            msgText = "Quota exceeded.";      
+            break;    
+        case FileError.TYPE_MISMATCH_ERR:      
+            msgText = "Type mismatch.";      
+            break;    
+        case FileError.PATH_EXISTS_ERR:      
+            msgText = "Path exists error.";      
+            break;    
+        default:      
+            msgText = "Unknown error.";  
+    }  
+    //Now tell the user what happened  
+    navigator.notification.alert(msgText, null, "File Error"); 
+}
+
+//READING DIRECTORY ENTRIES
+            
+function onGetFileSystemSuccess(fs) {  
+    alert("Accessing " + fs.name + " storage (" +    fs.root.fullPath + ")");  
+//Create a directory reader we'll use to list the files in  
+//the directory  
+    var dr = fs.root.createReader();  
+    // Get a list of all the entries in the directory  
+    dr.readEntries(onDirReaderSuccess, onFileError); 
+}         
+            
+function onDirReaderSuccess(dirEntries) {  
+    var i, fl, len;  
+    len = dirEntries.length;  
+    if(len > 0) {    
+        fl = '<ul data-role="listview">';    
+        for( i = 0; i < len; i++) {      
+            if(dirEntries[i].isDirectory == true) {        
+                fl += '<li><a href="#" onclick="processEntry(' + i +          ');">Directory: ' + dirEntries[i].name + '</a></li>';      
+            } 
+            else {        
+                fl += '<li><a href="#" onclick="processEntry(' + i +          ');">File: ' + dirEntries[i].name + '</a></li>';      
+            }    
+        }  
+        fl += "</ul>";  
+    } else {    
+        fl = "<p>No entries found</p>";  
+    }  
+    //Update the page content with our directory list  
+    $('#dirEntries').html(fl);  
+    //Display the directory entries page  
+    $.mobile.changePage("#dirList", "slide", false, true); 
+} 
+            
+            
+//ACCESSING FILEENTRY AND DIRECTORYENTRY PROPETIES
+fs.root.getFile("sample.txt", { create : false },  processEntry, onFileError); 
+
+function processEntry(theEntry) {  
+    var fi = "";  
+    fi += '<p><b>Name</b>: ' + theEntry.name + '</p>';  
+    fi += '<p><b>Full Path</b>: ' + theEntry.fullPath + '</p>';  
+    fi += '<p><b>URI</b>: ' + theEntry.toURI() + '</p>';  if(theEntry.isFile == true) {    
+        fi += '<p>The entry is a file</p>';  
+    } 
+    else 
+    {    fi += '<p>The entry is a directory</p>';  }  
+    //Update the page content with information about the file  
+    $('#fileInfo').html(fi);  
+    //Display the directory entries page  
+    $.mobile.changePage("#fileDetails", "slide", false, true); 
+} 
+
+theEntry.getMetadata(onGetMetadataSuccess, onFileError);
+            
+/*function onGetMetadataSuccess(metadata) {  
+    alert("File Modification Time:" + metadata.modificationTime); 
+}*/
+
+function onGetMetadataSuccess(metadata) {  
+    var md = '';  
+    for(aKey in metadata) {    
+        md += '<b>' + aKey + '</b>: ' + metadata[aKey] + br;  
+    }  
+    md += hr;  
+    //Update the page content with information about the file  
+    $('#fileMetadata').html(md); 
+} 
+     
+            
+            
+//COPIADO DE INTERNET
+   // invoked when device is ready 
+        function deviceInfo() {
+            document.getElementById('window.device.phonegap').innerHTML = 'window.device.phonegap = ' + window.device.phonegap;
+        }
+        // register PhoneGap event listeners when DOM content loaded
+        function init() {
+            console.log('init()');
+            document.addEventListener("deviceready", deviceInfo, true); 
+        }
+ 
+        // retrieves root file system entry
+        var getFileSystemRoot = (function() {
+            // private
+            var root;
+            
+            // one-time retrieval of the root file system entry
+            var init = function() {
+                window.requestFileSystem(LocalFileSystem.PERSISTENT, 0,
+                    function(fileSystem) {
+                        root = fileSystem.root;
+                    }, 
+                    onFileSystemError);
+            };
+            document.addEventListener("deviceready", init, true); 
+            // public function returns private root entry
+            return function() {
+                return root;
+            };
+        }()); // execute immediately
+        // file system error handler
+        function onFileSystemError(error) {
+            var msg = 'file system error: ' + error.code;
+            navigator.notification.alert(msg, null, 'File System Error');
+        }
+        // logs file events
+        function onFileEvent(event) {
+            console.log('file event: ' + event.target.fileName + ' ' + event.type);
+        }
+      
+        // called when error reading file
+        function onFileError(event) {
+            console.log('file error: ' + event.target.error.code);
+        }
+        // called when file is written
+        function onFileWrite(event) {
+            onFileEvent(event);
+            console.log('FileWriter position=' + 
+                event.target.position + ", length=" + event.target.length);
+        }
+        // writes a text file to the device
+        function writeFile() {
+                // root file system entry
+            var root = getFileSystemRoot(),
+            
+                // writes a file
+                write_file = function(writer) {
+                    var lineCount = 1;
+                              
+                    // set the callbacks
+                    writer.onwritestart = onFileEvent;
+                    writer.onprogress = onFileEvent;
+                    writer.onwrite = onFileWrite;
+                    writer.onabort = onFileEvent;
+                    writer.onerror = onFileError;
+                    writer.onwriteend = function(event) {
+                        onFileEvent(event);
+                        lineCount += 1;
+                        if (lineCount <= 3) {
+                            // append a new line   
+                            writer.write('Line ' + lineCount + '.\r\n');  
+                        } 
+                        else {
+                            alert(writer.fileName + 
+                                ' length=' + writer.length + 
+                                ', position=' + writer.position);
+                        }
+                    }
+                    
+                    // append
+                    writer.seek(writer.length);
+          
+                    // write to file
+                    writer.write('Line ' + lineCount + '.\r\n');   
+                },
+                
+                // creates a FileWriter object
+                create_writer = function(fileEntry) {
+                    fileEntry.createWriter(write_file, onFileSystemError);
+                };
+            
+            // create a file and write to it
+            root.getFile('bbgap.txt', {create: true}, create_writer, onFileSystemError);
+        }
+        
+        // remove file system entry
+        function removeFile() {
+            var root = getFileSystemRoot();
+            var remove_file = function(entry) {
+                entry.remove(function() {
+                    navigator.notification.alert(entry.toURI(), null, 'Entry deleted');                    
+                }, onFileSystemError);
+            };
+            
+            // retrieve a file and truncate it
+            root.getFile('bbgap.txt', {create: false}, remove_file, onFileSystemError);
+        }      
+            
+            
+            
+            
+             </script>
+    <!--READING -->    
+      <!-- <section id="dirList" data-role="page" data-add-back-btn="true">  
+           <header data-role="header">    
+               <h1>File API Demo</h1>    
+               <a onclick="writeFile();" data-icon="plus"      class="ui-btn-right">Write</a>  
+           </header>  
+           <div data-role="content">    
+               <p>File system contents:</p>    
+               <div id="dirEntries"></div>    
+               <hr />    
+               <div id="writeInfo"></div>  
+           </div> 
+        </section> 
+        -->
+        <section id="fileDetails" data-role="page"  data-add-back-btn="true">  <header data-role="header">    <h1>File API Demo</h1>  </header>  <div data-role="content">    <p><em>Directory Entry Information</em></p>    <hr />    <div id="fileInfo"></div>    <hr />    <p><em>File Metadata:</em></p>    <div id="fileMetadata"></div>    <input type="button" value="View File"      onclick="viewFile();">    <input type="button" value="Remove File"      onclick="removeFile();">  </div> </section>
+        
+    </head>
+        </html>
       
        
         
