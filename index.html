@@ -21,7 +21,11 @@ window.resolveLocalFileSystemURL(directorio, function(dir) {
 	});
 });
             
-            
+             var file = navigator.files.create();
+            function onSaveFile(file) {
+        alert("Save Success");
+    }
+
             
              </script>
             <section id="fileDetails" data-role="page"  data-add-back-btn="true">  
