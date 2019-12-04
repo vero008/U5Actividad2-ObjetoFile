@@ -11,47 +11,38 @@
         <script type="text/javascript" charset="utf-8" src="phonegap.js"></script>
         <script type="text/javascript" charset="utf-8">
             
-            var directorio = "file:///storage/emulated/0";
-var nombreArchivo = "myfile.txt";
+           
 
-window.resolveLocalFileSystemURL(directorio, function(dir) {
-	dir.getFile(nombreArchivo, {create:true}, function(fileEntry) {
-		// el archivo ha sido creado satisfactoriamente.
-		// Usa fileEntry para leer el contenido o borrar el archivo
-	});
-});
+            document.getElementById("createFile").addEventListener("click", createFile);
+document.getElementById("writeFile").addEventListener("click", writeFile);
+document.getElementById("readFile").addEventListener("click", readFile);
+document.getElementById("removeFile").addEventListener("click", removeFile);
             
-             var file = navigator.files.create();
-            function onSaveFile(file) {
-        alert("Save Success");
-    }
+            function createFile() {
+   var type = window.TEMPORARY;
+   var size = 5*1024*1024;
+   window.requestFileSystem(type, size, successCallback, errorCallback)
 
+   function successCallback(fs) {
+      fs.root.getFile('log.txt', {create: true, exclusive: true}, function(fileEntry) {
+         alert('File creation successfull!')
+      }, errorCallback);
+   }
+
+   function errorCallback(error) {
+      alert("ERROR: " + error.code)
+   }
+	
+}
+            
+            
             
              </script>
-            <section id="fileDetails" data-role="page"  data-add-back-btn="true">  
-                <header data-role="header">    
-                    <h1>Archivos</h1>  
-                    <p>https://es.ourcodeworld.com/articulos/leer/22/como-crear-un-archivo-en-cordova</p>
-                </header>  
-               <!-- <div data-role="content">    
-                    <p><em>Directory Entry Information</em></p>    
-                    <hr />    
-                    <div id="fileInfo"></div>    
-                    <hr />    
-                    <p><em>File Metadata:</em></p>    
-                    <div id="fileMetadata"></div>    
-                    <input type="button" value="View File"      
-                           onclick="viewFile();">    
-                    <input type="button" value="Remove File"      
-                           onclick="removeFile();">  
-                </div>
--->
-        </section>
+            <button id = "createFile">CREATE FILE</button>
+<button id = "writeFile">WRITE FILE</button>
+<button id = "readFile">READ FILE</button>
+<button id = "removeFile">DELETE FILE</button>
+<textarea id = "textarea"></textarea>
         
     </head>
         </html>
-      
-           
-       
-        
-                   
